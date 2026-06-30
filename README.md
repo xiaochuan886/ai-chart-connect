@@ -7,7 +7,7 @@ This is an [agent skill](https://skills.sh) that lets an external agent drive a 
 ## Install
 
 ```bash
-npx skills add <your-github-username>/ai-chart-connect
+npx skills add xiaochuan886/ai-chart-connect
 ```
 
 This drops the skill into `~/.agents/skills/ai-chart-connect/` and links it into your agent's skill directory (Claude Code, Codex, Cursor, … — auto-detected). Requires the [`skills` CLI](https://skills.sh).
