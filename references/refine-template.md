@@ -83,6 +83,19 @@ PUT  $BASE/api/workspaces/:id/file  { "path": "renderer.tsx", "content": "...", 
 > （因为校验要重新编译当前 renderer）。这就是 `push` 默认 `--stop-on-fail` 的原因：坏文件一出现就停，
 > 别让后续 PUT 踩着坏 renderer。万一推坏了一个文件，修好本地版本重新 `push`（或单独 `put` 那个文件）即可恢复。
 
+### 属性面板速记（改 config 前先理解）
+
+工作台的属性面板**完全由 `config.schema.json` 自动生成**——每个 `property`
+是一个控件，控件类型由 `type` 决定：`boolean`→开关、`select`→下拉(带 `options`)、
+`color`→取色器、`number`→数字框、`string`/`multiline`→文本框；`group` 决定分区。
+
+- **"显示/隐藏 X"开关必须用 `boolean`**，不要用 string 建模（否则面板里是个文本框，
+  写进去的是字符串，开关失效）。
+- **`show*` 开关(showTitle/showSubtitle/showLegend/showFootnote)由 layout shell 消费**：
+  renderer 只要挂了对应 slot 组件(`<Title>`/`<Legend>` 等)，改 `config.values.json`
+  的开关值就立即生效，renderer 不用自己判断。(注意键名是 `showFootnote`，不是 `showFooter`。)
+- **图表专属开关**(如 `showLabels`、`showStates`)仍要 renderer 自己读（见下方头号陷阱）。
+
 ---
 
 ## 第二部分：头号陷阱 —— 改了但看不见
